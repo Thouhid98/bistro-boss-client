@@ -18,7 +18,7 @@ const Navbar = () => {
                     <Link to='/addblog'>CONTACT US</Link>
                     <Link to='/allblogs'>DASHBOARD</Link>
                     <Link to='/menu'>OUR MENU</Link>
-                    <Link to='/featuredblogs'>OUR SHOP</Link>
+                    <Link to='/order/salad'>ORDER NOW</Link>
                     {/* <Link to={`/fetchwishlist/${email}`}>Wishlist</Link>            */}
 
                 </ul>
