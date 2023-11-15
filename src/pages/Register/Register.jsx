@@ -5,11 +5,12 @@ import { AuthContext } from '../../providers/AuthProvider';
 
 
 const Register = () => {
-    const { createUser } = useContext(AuthContext);
+    const { createUser, updateUserProfile } = useContext(AuthContext);
 
     const {
         register,
         handleSubmit,
+        reset,
         formState: { errors },
       } = useForm();
 
@@ -20,8 +21,17 @@ const Register = () => {
         createUser(data.email, data.password)
         .then(result =>{
             console.log(result.user);
+            // Update User Profile 
+            updateUserProfile(data.name, data.PhotoURL)
+            .then(()=>{
+                console.log('Profile Updated');
+                reset()
+            })
+            .catch(error => {
+                console.log(error);
+            })
         })
-        
+
     }
 
     
@@ -53,6 +63,14 @@ const Register = () => {
                                 </label>
                                 <input type="text" {...register("name", { required: true })} name='name' placeholder="name" className="input input-bordered"  />
                                 {errors.name && <span className='mt-1 text-red-600'>This field is required</span>}
+                            </div>
+
+                            <div className="form-control">
+                                <label className="label">
+                                    <span className="label-text text-base font-medium">PhotoURL </span>
+                                </label>
+                                <input type="text" {...register("PhotoURL", { required: true })} name='PhotoURL' placeholder="PhotoURL" className="input input-bordered"  />
+                                {errors.PhotoURL && <span className='mt-1 text-red-600'>This field is required</span>}
                             </div>
 
                             <div className="form-control">

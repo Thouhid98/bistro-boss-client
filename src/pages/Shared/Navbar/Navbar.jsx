@@ -38,6 +38,8 @@ const Navbar = () => {
                 {
                     user?.email ?
                         <>
+                            <p className='mt-6 '>{user?.displayName}</p>
+                            
                             <Link onClick={handleSignOut}>
                                 <button className="btn mr-3 bg-white  my-3 border-[#D99904] text-[#D99904]">LogOut</button>
                             </Link>
