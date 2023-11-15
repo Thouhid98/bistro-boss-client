@@ -1,11 +1,15 @@
 import { loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, validateCaptcha } from 'react-simple-captcha';
 import loginImg from '../../assets/others/authentication2.png'
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
+import { AuthContext } from '../../providers/AuthProvider';
+import Swal from 'sweetalert2';
 
 
 const Login = () => {
     const captchaRef = useRef(null);
     const [disabled, setDisabled ] = useState(true)
+    const { signinUser } = useContext(AuthContext);
+
     useEffect(()=>{
         loadCaptchaEnginge(6);
     }, [])
@@ -15,6 +19,29 @@ const Login = () => {
         const email = e.target.email.value;
         const password = e.target.password.value;
         console.log(email, password);
+
+         // user SignIn firebase 
+         signinUser(email, password)
+         .then(result => {
+             console.log(result.user);
+             Swal.fire({
+                 title: 'Success!',
+                 text: 'Login Successfull',
+                 icon: 'success',
+                 confirmButtonText: 'Cool'
+             })
+
+             e.target.reset();
+         })
+         .catch(error => {
+             console.log(error);
+             Swal.fire({
+                 title: 'warning!',
+                 text: 'Invalid UserId or Password',
+                 icon: 'warning',
+                 confirmButtonText: 'Cool'
+             })
+         })
     }
 
     const handleValidateCaptcha = () =>{
