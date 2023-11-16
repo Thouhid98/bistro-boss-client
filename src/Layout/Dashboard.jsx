@@ -1,52 +1,66 @@
-import Cart from '../pages/Dashboard/Cart/Cart';
+import useCart from '../hooks/useCart';
 import { NavLink, Outlet } from 'react-router-dom';
 
 const Dashboard = () => {
+    const [cart] = useCart()
+    const isAdmin = true
     return (
         <>
-        <div className='flex'>
-            <div className='w-64 min-h-full bg-[#D99904]'>
-                <ul className='menu p-4'>
-                    <li>
-                        <NavLink to='/dashboard/userHome'>
-                         User Home</NavLink>
-                    </li>
-                    <li>
-                        <NavLink to='/dashboard/reservation'>
-                        
-                            Reservation</NavLink>
-                    </li>
-                    <li>
-                        <NavLink to='/dashboard/cart'>
-                             My Cart</NavLink>
-                    </li>
-                    <li>
-                        <NavLink to='/dashboard/review'>
-                            Reviews </NavLink>
-                    </li>
-                    <li>
-                        <NavLink to='/dashboard/bookings'>
-                             My Bookings</NavLink>
-                    </li>
-                    <div className='divider'></div>
+            <div className='flex'>
+                <div className='w-64 min-h-screen bg-[#D99904]'>
+                    <ul className='menu p-4'>
+                        {
+                            isAdmin ? 
+                            <>
+                                <li>
+                                    <NavLink to='/dashboard/adminHome'>
+                                        User Home</NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to='/dashboard/addItems'>
 
-                    <li>
-                        <NavLink to='/'>
-                         Home</NavLink>
-                    </li>
-                    <li>
-                        <NavLink to='/order/salad'>
-                         Menu</NavLink>
-                    </li>
-                </ul>
-            </div>
+                                        Add Items</NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to='/dashboard/manageItems'>
+                                        Manage Items</NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to='/dashboard/bookings'>
+                                        Manage Bookings </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to='/dashboard/users'>
+                                        All Users</NavLink>
+                                </li>
+                            </>
+                                :
+                                <>
+                                </>
+                        }
 
-            <div className='flex-1 p-6'>
-                <Cart></Cart>
-                <Outlet></Outlet>
-                
+                        {/* shared NavLinks  */}
+                        <div className='divider'></div>
+
+                        <li>
+                            <NavLink to='/'>
+                                Home</NavLink>
+                        </li>
+                        <li>
+                            <NavLink to='/order/salad'>
+                                Menu</NavLink>
+                        </li>
+                        <li>
+                            <NavLink to='/order/salad'>
+                                Contact</NavLink>
+                        </li>
+                    </ul>
+                </div>
+
+                <div className='flex-1 p-6'>
+                    <Outlet></Outlet>
+                </div>
             </div>
-        </div>
         </>
     );
 };

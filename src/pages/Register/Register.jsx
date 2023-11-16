@@ -4,6 +4,7 @@ import { useContext } from 'react';
 import { AuthContext } from '../../providers/AuthProvider';
 import useAxiosPublic from '../../hooks/useAxiosPublic';
 import Swal from 'sweetalert2';
+import SocialLogin from '../../components/Sectiontitle/SocialLogin/SocialLogin';
 
 
 const Register = () => {
@@ -55,24 +56,13 @@ const Register = () => {
 
     }
 
-    
-    // const handleSignUp = e =>{
-    //     e.preventDefault();
-    //     const name = e.target.name.value;
-    //     const email = e.target.email.value;
-    //     const password = e.target.password.value;
-    //     console.log(email, password, name);
-    // }        
-
-
-
     return (
         <div >
             <div className="flex ml-40 gap-8 mb-20 p-12">
                 <div className="">
                     <img className="w-[400px] h-[350px] my-16" src={loginImg} alt="" />
                 </div>
-                <div className="border lg:w-[500px] rounded-lg p-12 h-[500px]">
+                <div className="border lg:w-[500px] rounded-lg p-12 h-[700px]">
                     <h2 className="text-4xl text-center my-4 text-[#444444] font-bold">SignUp</h2>
                     <div>
 
@@ -125,7 +115,7 @@ const Register = () => {
                         </form>
 
                         <div>
-
+                            <SocialLogin></SocialLogin>
                         </div>
                     </div>
                 </div>
