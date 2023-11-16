@@ -2,9 +2,12 @@ import { useForm } from 'react-hook-form';
 import loginImg from '../../assets/others/authentication2.png'
 import { useContext } from 'react';
 import { AuthContext } from '../../providers/AuthProvider';
+import useAxiosPublic from '../../hooks/useAxiosPublic';
+import Swal from 'sweetalert2';
 
 
 const Register = () => {
+    const axiosPublic = useAxiosPublic();
     const { createUser, updateUserProfile } = useContext(AuthContext);
 
     const {
@@ -25,6 +28,24 @@ const Register = () => {
             updateUserProfile(data.name, data.PhotoURL)
             .then(()=>{
                 console.log('Profile Updated');
+
+                const userInfo = {
+                    name: data.name,
+                    email: data.email
+                }
+                axiosPublic.post('/users', userInfo)
+                .then(res=>{
+                    console.log('add to database');
+                    if(res.data.insertedId >1){
+                        Swal.fire({
+                            title: 'Success!',
+                            text: 'SignUp Successfull',
+                            icon: 'success',
+                            confirmButtonText: 'Cool'
+                        })
+                    }
+
+                })
                 reset()
             })
             .catch(error => {

@@ -4,6 +4,7 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import { AuthContext } from '../../providers/AuthProvider';
 import Swal from 'sweetalert2';
 import { useLocation, useNavigate } from 'react-router-dom';
+import SocialLogin from '../../components/Sectiontitle/SocialLogin/SocialLogin';
 
 
 const Login = () => {
@@ -64,7 +65,7 @@ const Login = () => {
                 <div className="">
                     <img className="w-[400px] h-[350px] my-16" src={loginImg} alt="" />
                 </div>
-                <div className="border lg:w-[500px] rounded-lg p-12 h-[500px]">
+                <div className="border lg:w-[500px] rounded-lg p-12 h-[650px]">
                     <h2 className="text-4xl text-center my-4 text-[#444444] font-bold">Login</h2>
                     <div>
 
@@ -92,7 +93,7 @@ const Login = () => {
                                     <LoadCanvasTemplate />
                                 </label>
 
-                                <input ref={captchaRef} type="text" name='captcha' placeholder="Type The Captcha" className="input input-bordered" required />
+                                <input ref={captchaRef} type="text" name='captcha' placeholder="Type The Captcha" className="input input-bordered"  />
 
                                 <button onClick={handleValidateCaptcha} className='btn btn-outline btn-xs mt-2'>Validate</button>
 
@@ -100,7 +101,7 @@ const Login = () => {
 
                             {/* <Link to='/login'> */}
                             <div className="form-control mt-6">
-                                <button disabled={disabled} className="btn bg-[#D99904] text-white">LogIn</button>
+                                <button disabled={false} className="btn bg-[#D99904] text-white">LogIn</button>
                             </div>
 
                             <label className="label">
@@ -108,12 +109,10 @@ const Login = () => {
                             </label>
                         </form>
 
+                        <SocialLogin></SocialLogin>
                         <div>
 
-                            {/* <button onClick={handleGoogleSignIn} className="btn btn-outline bg-[#FF3811] text-white w-full mb-3 mt-3">
-                            Google
-                        </button> */}
-
+                          
                         </div>
                     </div>
                 </div>
