@@ -1,9 +1,13 @@
+import useAdmin from '../hooks/useAdmin';
 import useCart from '../hooks/useCart';
 import { NavLink, Outlet } from 'react-router-dom';
 
 const Dashboard = () => {
     const [cart] = useCart()
-    const isAdmin = true
+
+    // Get Admin value from database 
+    const [isAdmin] = useAdmin()
+    
     return (
         <>
             <div className='flex'>

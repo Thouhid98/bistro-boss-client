@@ -1,11 +1,14 @@
-import React from 'react';
+// import React, { useContext } from 'react';
 import useCart from '../../../hooks/useCart';
 import Swal from 'sweetalert2';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
+// import { AuthContext } from '../../../providers/AuthProvider';
 
 const Cart = () => {
     const [cart, refetch] = useCart()
-    const totalPrice = cart.reduce((total, item) => total + item.price, 0)
+    console.log(cart);
+    // const {loading } = useContext(AuthContext);
+    const totalPrice = cart?.reduce((total, item) => total + item.price, 0)
     const axiosSecure = useAxiosSecure()
 
     const handleDelete = id =>{
