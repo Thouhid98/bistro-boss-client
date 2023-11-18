@@ -13,7 +13,23 @@ const Allusers = () => {
         }
     })
 
-    const handleDeleteUser = user =>{
+    const handleMakeAdmin = user =>{
+        axiosSecure.patch(`/users/admin/${user._id}`)
+        .then(res =>{
+            console.log(res.data);
+            if(res.data.modifiedCount>0){
+                refetch();
+                Swal.fire({
+                    title: "Make Admin Successfull!",
+                    text: `${user.name} is an Admin Now`,
+                    icon: "success",
+                    timer:2500
+                });
+            }
+        })
+    }
+
+    const handleDeleteUser = user => {
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -22,23 +38,23 @@ const Allusers = () => {
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
             confirmButtonText: "Yes, delete it!"
-          }).then((result) => {
+        }).then((result) => {
             if (result.isConfirmed) {
-              
+
                 axiosSecure.delete(`/users/${user._id}`)
-                .then(res =>{
-                    console.log(res.data);
-                    if(res.data.deletedCount>0){
-                        refetch();
-                        Swal.fire({
-                            title: "Deleted!",
-                            text: "Your file has been deleted.",
-                            icon: "success"
-                          });
-                    }
-                })
+                    .then(res => {
+                        console.log(res.data);
+                        if (res.data.deletedCount > 0) {
+                            refetch();
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Your file has been deleted.",
+                                icon: "success"
+                            });
+                        }
+                    })
             }
-          });
+        });
     }
 
 
@@ -69,11 +85,18 @@ const Allusers = () => {
                                 <th>{index + 1}</th>
                                 <td>{user.name}</td>
                                 <td>{user.email}</td>
-                                <td>Blue</td>
+                                <td>
+                                    {
+                                        user.role ==='admin' ? 'Admin' :
+                                        <th>
+                                        <button onClick={() => handleMakeAdmin(user)} className="btn btn-secondary btn-xs">Make Admin </button>
+                                        </th>
+                                    }
+                                </td>
 
                                 <td>
                                     <th>
-                                        <button onClick={() => handleDeleteUser(user)} className="btn btn-secondary btn-xs">Delete </button>
+                                        <button onClick={() => handleDeleteUser(user)} className="btn btn-secondary">Delete </button>
                                     </th>
                                 </td>
                             </tr>)
