@@ -2,6 +2,7 @@
 import useCart from '../../../hooks/useCart';
 import Swal from 'sweetalert2';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
+import { Link } from 'react-router-dom';
 // import { AuthContext } from '../../../providers/AuthProvider';
 
 const Cart = () => {
@@ -11,7 +12,7 @@ const Cart = () => {
     const totalPrice = cart?.reduce((total, item) => total + item.price, 0)
     const axiosSecure = useAxiosSecure()
 
-    const handleDelete = id =>{
+    const handleDelete = id => {
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -20,23 +21,23 @@ const Cart = () => {
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
             confirmButtonText: "Yes, delete it!"
-          }).then((result) => {
+        }).then((result) => {
             if (result.isConfirmed) {
-              
+
                 axiosSecure.delete(`/carts/${id}`)
-                .then(res =>{
-                    console.log(res.data);
-                    if(res.data.deletedCount>0){
-                        refetch();
-                        Swal.fire({
-                            title: "Deleted!",
-                            text: "Your file has been deleted.",
-                            icon: "success"
-                          });
-                    }
-                })
+                    .then(res => {
+                        console.log(res.data);
+                        if (res.data.deletedCount > 0) {
+                            refetch();
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Your file has been deleted.",
+                                icon: "success"
+                            });
+                        }
+                    })
             }
-          });
+        });
     }
 
     return (
@@ -44,7 +45,16 @@ const Cart = () => {
             <div className='flex justify-evenly mb-8'>
                 <h2 className='text-4xl '>Items {cart.length}</h2>
                 <h2 className='text-4xl '>Total Price {totalPrice}</h2>
-                <button className='btn btn-secondary'>Pay</button>
+
+                {
+                    cart.length ?
+                        <Link to="/dashboard/payment">
+                            <button className='btn btn-secondary'>Pay</button>
+                        </Link>
+                        :
+                        <button disabled className='btn btn-secondary'>Pay</button>
+                }
+                
             </div>
 
             <div className="overflow-x-auto">
@@ -65,7 +75,7 @@ const Cart = () => {
                         {/* row 1 */}
 
                         {
-                            cart.map((item, index)=> <tr key={item._id}>
+                            cart.map((item, index) => <tr key={item._id}>
                                 <th>
                                     <label>
                                         {index + 1}
@@ -78,24 +88,24 @@ const Cart = () => {
                                                 <img src={item.image} alt="Avatar Tailwind CSS Component" />
                                             </div>
                                         </div>
-                                        
+
                                     </div>
                                 </td>
                                 <td>
-                                   {item.name}
+                                    {item.name}
                                 </td>
                                 <td>$ {item.price}</td>
                                 <th>
-                                    <button onClick={()=>handleDelete(item._id)} className="btn btn-secondary btn-xs">Delete </button>
+                                    <button onClick={() => handleDelete(item._id)} className="btn btn-secondary btn-xs">Delete </button>
                                 </th>
                             </tr>)
                         }
-                        
+
                         {/* row 2 */}
-                        
+
 
                     </tbody>
-                   
+
 
                 </table>
             </div>
