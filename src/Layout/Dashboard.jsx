@@ -39,8 +39,33 @@ const Dashboard = () => {
                                 </li>
                             </>
                                 :
-                                <>
-                                </>
+                            <>
+                                <li>
+                                    <NavLink to="/dashboard/userHome">
+                                        
+                                        User Home</NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to="/dashboard/history">
+                                    
+                                        Not History</NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to="/dashboard/cart">
+                                     
+                                        My Cart ({cart.length})</NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to="/dashboard/review">
+                                        
+                                        Add a Review</NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to="/dashboard/paymentHistory">
+                                       
+                                        Real Payment History</NavLink>
+                                </li>
+                            </>
                         }
 
                         {/* shared NavLinks  */}

@@ -3,15 +3,18 @@ import { useEffect, useState } from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useCart from "../../../hooks/useCart";
 import useAuth from "../../../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const CheckoutForm = () => {
-    const [cart] = useCart()
+    const [cart, refetch] = useCart()
     const {user} = useAuth()
     const totalPrice = cart?.reduce((total, item)=>total + item.price, 0)
     console.log(totalPrice);
     const stripe = useStripe()
     const elements = useElements()
     const axiosSecure = useAxiosSecure()
+    const navigate = useNavigate();
     
     const [transactionId, setTransactionId ] = useState('')
     const [error, setError] = useState('')
@@ -76,6 +79,30 @@ const CheckoutForm = () => {
             if(paymentIntent.status === 'succeeded'){
                 console.log('Transaction Id', paymentIntent.id);
                 setTransactionId(paymentIntent.id)
+
+                // Now save Payment History in the database 
+                const payment = {
+                    email: user.email,
+                    price: totalPrice,
+                    transactionId: paymentIntent.id,
+                    date: new Date(),
+                    cartId: cart.map(item => item._id),
+                    menuId: cart.map(item => item.menuId),
+                    status: 'Pending'
+                }
+                const res = await axiosSecure.post('/payments', payment)
+                console.log('Payment Saved',res.data);
+                refetch()
+                if (res.data?.paymentResult?.insertedId) {
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "Thank you for Parchase",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    // navigate('/dashboard/paymentHistory')
+                }
             }
         }
 
