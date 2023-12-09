@@ -1,8 +1,8 @@
-# React + Vite
+## Website Link:
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. Used MongoDB Database for Backend
+2. CRUD Operations for data post and fetch
+3. Email and Password authentication using Firebase
+4. Google Login With Firebase
+5. sweetalert for message
+6. React Awesome Components to better ui
